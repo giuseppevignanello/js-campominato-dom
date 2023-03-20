@@ -8,7 +8,31 @@ const playBtnEl = document.querySelector(".play_btn");
 const selectEl = document.querySelector(".form-select");
 const footerEl = document.getElementById("app_footer");
 const mainEl = document.getElementById("app_main");
+// Create a void array (bombs); 
 
+// Create a counter (safe click)
+let safeClicks = 0;
+//Generate 16 random numbers and put them into the array; 
+
+// check: the same number can't be two times in the array; 
+// create a while loop, with the condition: bombs.lenght < 16
+
+let bombs = [];
+while (bombs.length < 16) {
+    // if the new random number is not included yet in the bomb array 
+    let randomNumber = random_number_in_a_int_range(0, 100);
+    if (!bombs.includes(randomNumber)) {
+          // push random number to array 
+        bombs.push(randomNumber); 
+    }
+}
+console.log(bombs)
+
+
+
+// Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
+// if the cell is a bomb the game stops (show the safe click counter)
+// else +1 to the safe click counter
 
 
 
@@ -17,12 +41,10 @@ playBtnEl.addEventListener("click",
     function () {
 
         if (selectEl.value === "easy") {
-            innerSquareGridToContainer(100, "bg_lightblue", "easy")
+            innerSquareGridToContainer(100, "bg_lightblue", "easy");
         } else if (selectEl.value === "medium") {
-
             innerSquareGridToContainer(81, "bg_lightblue", "medium")
-        } else if (selectEl.value === "hard") 
-        {
+        } else if (selectEl.value === "hard") {
             innerSquareGridToContainer(49, "bg_lightblue", "hard")
         }
         footerEl.innerHTML = "<span> Created by Giuseppe Vignanello</span>";
@@ -33,10 +55,9 @@ playBtnEl.addEventListener("click",
 
 
 
+// functions
 
-
-
-// function to create grid
+//generate square grid
 function innerSquareGridToContainer(maxCellNumb, bgColor, difficulty) {
     const containerEl = document.querySelector(".container");
     containerEl.innerHTML = ""
@@ -65,6 +86,12 @@ function innerSquareGridToContainer(maxCellNumb, bgColor, difficulty) {
     }
 }
 
+// random function
+function random_number_in_a_int_range(min, max) {
+    randomNumber = Number(Math.ceil(Math.random() * (max - min + 1)));
+    return randomNumber
+};
+
 // Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
 // nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
 // In seguito l'utente clicca su una cella:
@@ -77,19 +104,6 @@ function innerSquareGridToContainer(maxCellNumb, bgColor, difficulty) {
 // La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
 
-
-
-// Create a void array (bombs); 
-// Create a counter (safe click)
-//Generate 16 random numbers and put them into the array; 
-// check: the same number can't be two times in the array; 
-    // create a while loo, with the condition: bombs.lenght < 16
-        // if the new random number is not included yet in the bomb array 
-        // push random number to array 
-        
-// Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
-    // if the cell is a bomb the game stops (show the safe click counter)
-        // else +1 to the safe click counter
 
 
 
