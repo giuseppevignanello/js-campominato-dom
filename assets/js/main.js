@@ -12,7 +12,7 @@ const selectEl = document.querySelector(".form-select");
 const footerEl = document.getElementById("app_footer");
 const mainEl = document.getElementById("app_main");
 const alertEl = document.getElementById("alert")
-const containerEl = document.querySelector(".container");
+const overlayEl = document.getElementById("overlay");
 // Create a void array (bombs); 
 
 // Create a counter (safe click)
@@ -60,10 +60,8 @@ playBtnEl.addEventListener("click",
                     // if the cell is a bomb the game stops (show the safe click counter)
                     if ((bombs.includes(thisCellNumber))) {
                         thisCell.classList.add("bg-danger");
-                        console.log("Gioco finito");
-                        alertEl.classList.remove("d-none");
-                        containerEl.classList.add("opacity_bg")
-                        return "finish"
+                        console.log("Gioco finito"); 
+                        overlayEl.classList.add("d-block")
                         // alert(`Ops, you missed a bomb! Your score is: ${safeClicks.length}`)
                         // window.location.reload();
 
@@ -74,9 +72,9 @@ playBtnEl.addEventListener("click",
                         if (!safeClicks.includes(thisCellNumber)) {
                             safeClicks.push(thisCellNumber)
                             if (safeClicks.length === (maxCellNumb - 16)) { 
+                                overlayEl.classList.add("d-block")
                                 alert(`Congratulation! You Won!`); 
                                 window.location.reload(); 
-                                return "finish"
                             }
                         }
 
