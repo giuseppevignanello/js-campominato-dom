@@ -22,17 +22,13 @@ while (bombs.length < 16) {
     // if the new random number is not included yet in the bomb array 
     let randomNumber = random_number_in_a_int_range(0, 100);
     if (!bombs.includes(randomNumber)) {
-          // push random number to array 
-        bombs.push(randomNumber); 
+        // push random number to array 
+        bombs.push(randomNumber);
     }
 }
 console.log(bombs)
 
 
-
-// Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
-// if the cell is a bomb the game stops (show the safe click counter)
-// else +1 to the safe click counter
 
 
 
@@ -41,11 +37,39 @@ playBtnEl.addEventListener("click",
     function () {
 
         if (selectEl.value === "easy") {
-            innerSquareGridToContainer(100, "bg_lightblue", "easy");
+            innerSquareGridToContainer(100, "easy");
         } else if (selectEl.value === "medium") {
-            innerSquareGridToContainer(81, "bg_lightblue", "medium")
+            innerSquareGridToContainer(81, "medium")
         } else if (selectEl.value === "hard") {
-            innerSquareGridToContainer(49, "bg_lightblue", "hard")
+            innerSquareGridToContainer(49, "hard")
+        }
+        // take all the cells from the DOM
+        const cells = document.querySelectorAll(".cell");
+
+        // create a for to 
+        for (let i = 0; i < cells.length; i++) {
+            const thisCell = cells[i];
+            const thisCellNumber = (i+1);
+            thisCell.append(thisCellNumber);
+            // add the click event to each cell 
+            thisCell.addEventListener("click",
+                // change the bg color with classList 
+                function () {
+                    console.log(i + 1);
+                    // Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
+                    // if the cell is a bomb the game stops (show the safe click counter)
+                    if ((bombs.includes(thisCellNumber))) {
+                        thisCell.classList.add("bg-danger");
+                        console.log("Gioco finito");
+                    } else {
+                        thisCell.classList.add("bg_lightblue");
+                        safeClicks ++
+                    }
+                    // else +1 to the safe click counter
+
+
+                }
+            )
         }
         footerEl.innerHTML = "<span> Created by Giuseppe Vignanello</span>";
         mainEl.classList.add("py-4");
@@ -58,7 +82,7 @@ playBtnEl.addEventListener("click",
 // functions
 
 //generate square grid
-function innerSquareGridToContainer(maxCellNumb, bgColor, difficulty) {
+function innerSquareGridToContainer(maxCellNumb, difficulty) {
     const containerEl = document.querySelector(".container");
     containerEl.innerHTML = ""
 
@@ -66,23 +90,6 @@ function innerSquareGridToContainer(maxCellNumb, bgColor, difficulty) {
     for (let i = 1; i <= maxCellNumb; i++) {
         const cellEl = `<div class="cell ${difficulty}"></div>`
         containerEl.innerHTML += cellEl;
-    }
-
-    // take all the cells from the DOM
-    const cells = document.querySelectorAll(".cell");
-
-    // create a for to 
-    for (let i = 0; i < cells.length; i++) {
-        const thisCell = cells[i];
-        thisCell.append(i + 1)
-        // add the click event to each cell 
-        thisCell.addEventListener("click",
-            // change the bg color with classList 
-            function () {
-                thisCell.classList.toggle(bgColor);
-                console.log(i + 1);
-            }
-        )
     }
 }
 
