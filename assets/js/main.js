@@ -17,16 +17,10 @@ let safeClicks = 0;
 // check: the same number can't be two times in the array; 
 // create a while loop, with the condition: bombs.lenght < 16
 
-let bombs = [];
-while (bombs.length < 16) {
-    // if the new random number is not included yet in the bomb array 
-    let randomNumber = random_number_in_a_int_range(0, 100);
-    if (!bombs.includes(randomNumber)) {
-        // push random number to array 
-        bombs.push(randomNumber);
-    }
-}
-console.log(bombs)
+
+
+
+
 
 
 
@@ -38,10 +32,16 @@ playBtnEl.addEventListener("click",
 
         if (selectEl.value === "easy") {
             innerSquareGridToContainer(100, "easy");
+            bombs = generate_16_random_number_without_repetions(0, 100);
+            console.log(bombs);
         } else if (selectEl.value === "medium") {
-            innerSquareGridToContainer(81, "medium")
+            innerSquareGridToContainer(81, "medium");
+            bombs = generate_16_random_number_without_repetions(0, 81);
+            console.log(bombs);
         } else if (selectEl.value === "hard") {
             innerSquareGridToContainer(49, "hard")
+            bombs = generate_16_random_number_without_repetions(0, 49);
+            console.log(bombs);
         }
         // take all the cells from the DOM
         const cells = document.querySelectorAll(".cell");
@@ -49,7 +49,7 @@ playBtnEl.addEventListener("click",
         // create a for to 
         for (let i = 0; i < cells.length; i++) {
             const thisCell = cells[i];
-            const thisCellNumber = (i+1);
+            const thisCellNumber = (i + 1);
             thisCell.append(thisCellNumber);
             // add the click event to each cell 
             thisCell.addEventListener("click",
@@ -63,7 +63,7 @@ playBtnEl.addEventListener("click",
                         console.log("Gioco finito");
                     } else {
                         thisCell.classList.add("bg_lightblue");
-                        safeClicks ++
+                        safeClicks++
                     }
                     // else +1 to the safe click counter
 
@@ -98,6 +98,25 @@ function random_number_in_a_int_range(min, max) {
     randomNumber = Number(Math.ceil(Math.random() * (max - min + 1)));
     return randomNumber
 };
+
+
+
+// 16 random function
+
+function generate_16_random_number_without_repetions(min, max) {
+    let array = [];
+    while (array.length < 16) {
+        // if the new random number is not included yet in the bomb array 
+        let randomNumber = random_number_in_a_int_range(min, max);
+        if (!array.includes(randomNumber)) {
+            // push random number to array 
+            array.push(randomNumber);
+        }
+    }
+
+    return array
+
+}
 
 // Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
 // nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
