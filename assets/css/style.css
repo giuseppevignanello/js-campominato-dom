@@ -1,0 +1,36 @@
+.hard {
+    width: calc(100%/7); 
+    
+    aspect-ratio: 1;
+}
+
+.medium{
+    width: calc(100%/9); 
+    
+    aspect-ratio: 1;
+}
+.easy {
+    width: calc(100%/10); 
+    
+    aspect-ratio: 1;
+}
+
+
+.cell {
+
+    border: 1px solid;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg_lightblue {
+    background-color: lightblue
+}
+
+
+#app_main {
+    background-color:antiquewhite; 
+    
+}
