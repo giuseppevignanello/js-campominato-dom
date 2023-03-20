@@ -17,15 +17,6 @@ let safeClicks = 0;
 // check: the same number can't be two times in the array; 
 // create a while loop, with the condition: bombs.lenght < 16
 
-
-
-
-
-
-
-
-
-
 // addEventListener on play button
 playBtnEl.addEventListener("click",
     function () {
@@ -61,13 +52,13 @@ playBtnEl.addEventListener("click",
                     if ((bombs.includes(thisCellNumber))) {
                         thisCell.classList.add("bg-danger");
                         console.log("Gioco finito");
+                        console.log("Il tuo punteggio è: " + safeClicks);
+                    // else +1 to the safe click counter
                     } else {
                         thisCell.classList.add("bg_lightblue");
                         safeClicks++
                     }
-                    // else +1 to the safe click counter
-
-
+                    
                 }
             )
         }
