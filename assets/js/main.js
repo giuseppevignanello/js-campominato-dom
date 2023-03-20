@@ -7,13 +7,15 @@
 
 
 // general const
+
 const playBtnEl = document.querySelector(".play_btn");
 const selectEl = document.querySelector(".form-select");
 const footerEl = document.getElementById("app_footer");
 const mainEl = document.getElementById("app_main");
 const alertEl = document.getElementById("alert")
 const overlayEl = document.getElementById("overlay");
-const messageEl = document.getElementById("message")
+const messageEl = document.getElementById("message"); 
+const playAgainBtn = document.querySelector(".play_again")
 // Create a void array (bombs); 
 
 // Create a counter (safe click)
@@ -24,6 +26,7 @@ let safeClicks = [];
 // create a while loop, with the condition: bombs.lenght < 16
 let maxCellNumb = 0
 // addEventListener on play button
+
 playBtnEl.addEventListener("click",
     function () {
 
@@ -86,6 +89,77 @@ playBtnEl.addEventListener("click",
         footerEl.innerHTML = "<span> Created by Giuseppe Vignanello</span>";
         mainEl.classList.add("py-4");
     }
+)
+
+
+//play_again btn 
+
+playAgainBtn.addEventListener ("click", 
+
+
+function() {
+
+    overlayEl.classList.remove("d-block")
+    if (selectEl.value === "easy") {
+        innerSquareGridToContainer(100, "easy");
+        bombs = generate_x_random_number_without_repetions(1, 100, 16);
+        console.log(bombs);
+        maxCellNumb = 100;
+    } else if (selectEl.value === "medium") {
+        innerSquareGridToContainer(81, "medium");
+        bombs = generate_x_random_number_without_repetions(1, 81, 16);
+        console.log(bombs);
+        maxCellNumb = 81;
+    } else if (selectEl.value === "hard") {
+        innerSquareGridToContainer(49, "hard")
+        bombs = generate_x_random_number_without_repetions(1, 49, 16);
+        console.log(bombs);
+        maxCellNumb = 49;
+    }
+
+
+    // take all the cells from the DOM
+    const cells = document.querySelectorAll(".cell");
+
+    // create a for to 
+    for (let i = 0; i < cells.length; i++) {
+        const thisCell = cells[i];
+        const thisCellNumber = (i + 1);
+        thisCell.append(thisCellNumber);
+        // add the click event to each cell 
+
+
+        thisCell.addEventListener("click",
+            function () {
+                // console.log(i + 1);
+                // Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
+                // if the cell is a bomb the game stops (show the safe click counter)
+                if ((bombs.includes(thisCellNumber))) {
+                    thisCell.classList.add("bg-danger");
+                    console.log("Gioco finito"); 
+                    overlayEl.classList.add("d-block")
+                    messageEl.innerText = `Oh no! you stepped on a bomb! Your score: ${safeClicks.length}`
+                    // window.location.reload();
+
+
+                    // else +1 to the safe click counter
+                } else {
+                    thisCell.classList.add("bg_lightblue");
+                    if (!safeClicks.includes(thisCellNumber)) {
+                        safeClicks.push(thisCellNumber)
+                        if (safeClicks.length === (maxCellNumb - 16)) { 
+                            overlayEl.classList.add("d-block"); 
+                            messageEl.innerText = `Congratulation! You Won!` 
+                        }
+                    }
+
+                }
+
+            })
+
+    }
+}
+
 )
 
 
