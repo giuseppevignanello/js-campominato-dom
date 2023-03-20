@@ -3,6 +3,9 @@
 // Ci saranno quindi 10 caselle per ognuna delle 10 righe.
 // Quando l'utente clicca su ogni cella, la cella cliccata si colora di azzurro ed emetto un messaggio in console con il numero della cella cliccata.
 
+
+
+
 // general const
 const playBtnEl = document.querySelector(".play_btn");
 const selectEl = document.querySelector(".form-select");
@@ -23,15 +26,15 @@ playBtnEl.addEventListener("click",
 
         if (selectEl.value === "easy") {
             innerSquareGridToContainer(100, "easy");
-            bombs = generate_16_random_number_without_repetions(0, 100);
+            bombs = generate_16_random_number_without_repetions(1, 100);
             console.log(bombs);
         } else if (selectEl.value === "medium") {
             innerSquareGridToContainer(81, "medium");
-            bombs = generate_16_random_number_without_repetions(0, 81);
+            bombs = generate_16_random_number_without_repetions(1, 81);
             console.log(bombs);
         } else if (selectEl.value === "hard") {
             innerSquareGridToContainer(49, "hard")
-            bombs = generate_16_random_number_without_repetions(0, 49);
+            bombs = generate_16_random_number_without_repetions(1, 49);
             console.log(bombs);
         }
         // take all the cells from the DOM
@@ -43,24 +46,30 @@ playBtnEl.addEventListener("click",
             const thisCellNumber = (i + 1);
             thisCell.append(thisCellNumber);
             // add the click event to each cell 
-            thisCell.addEventListener("click",
-                // change the bg color with classList 
-                function () {
-                    console.log(i + 1);
-                    // Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
-                    // if the cell is a bomb the game stops (show the safe click counter)
-                    if ((bombs.includes(thisCellNumber))) {
-                        thisCell.classList.add("bg-danger");
-                        console.log("Gioco finito");
-                        console.log("Il tuo punteggio è: " + safeClicks);
+
+
+            thisCell.addEventListener("click", 
+            function () {
+                console.log(i + 1);
+                // Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
+                // if the cell is a bomb the game stops (show the safe click counter)
+                if ((bombs.includes(thisCellNumber))) {
+                    thisCell.classList.add("bg-danger");
+                    console.log("Gioco finito");
+                    console.log("Il tuo punteggio è: " + safeClicks);
+                    alert (`Ops, hai pestato una bomba. Il tuo punteggio è ${safeClicks}`)
+
                     // else +1 to the safe click counter
-                    } else {
-                        thisCell.classList.add("bg_lightblue");
-                        safeClicks++
-                    }
-                    
+                } else {
+                    thisCell.classList.add("bg_lightblue");
+                    safeClicks++
                 }
-            )
+
+            })
+
+            // change the bg color with classList 
+
+
         }
         footerEl.innerHTML = "<span> Created by Giuseppe Vignanello</span>";
         mainEl.classList.add("py-4");
@@ -120,24 +129,6 @@ function generate_16_random_number_without_repetions(min, max) {
 // l'utente può continuare a cliccare sulle altre celle.
 // La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
