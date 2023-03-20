@@ -26,17 +26,17 @@ playBtnEl.addEventListener("click",
 
         if (selectEl.value === "easy") {
             innerSquareGridToContainer(100, "easy");
-            bombs = generate_16_random_number_without_repetions(1, 100);
+            bombs = generate_x_random_number_without_repetions(1, 100, 16);
             console.log(bombs);
             maxCellNumb = 100;
         } else if (selectEl.value === "medium") {
             innerSquareGridToContainer(81, "medium");
-            bombs = generate_16_random_number_without_repetions(1, 81);
+            bombs = generate_x_random_number_without_repetions(1, 81, 16);
             console.log(bombs);
             maxCellNumb = 81;
         } else if (selectEl.value === "hard") {
             innerSquareGridToContainer(49, "hard")
-            bombs = generate_16_random_number_without_repetions(1, 49);
+            bombs = generate_x_random_number_without_repetions(1, 49, 16);
             console.log(bombs);
             maxCellNumb = 49;
         }
@@ -53,20 +53,23 @@ playBtnEl.addEventListener("click",
 
             thisCell.addEventListener("click",
                 function () {
-                    console.log(i + 1);
+                    // console.log(i + 1);
                     // Create an if/else condition inside the cell's "add event listener" to check if the cell is a bomb or not. 
                     // if the cell is a bomb the game stops (show the safe click counter)
                     if ((bombs.includes(thisCellNumber))) {
                         thisCell.classList.add("bg-danger");
                         console.log("Gioco finito");
                         alert(`Ops, you missed a bomb! Your score is: ${safeClicks.length}`)
+                        window.location.reload();
 
                         // else +1 to the safe click counter
                     } else {
                         thisCell.classList.add("bg_lightblue");
                         if (!safeClicks.includes(thisCellNumber)) {
                             safeClicks.push(thisCellNumber)
-                            if (safeClicks.length === (maxCellNumb - 2)) { alert(`Congratulation! You Won!`)
+                            if (safeClicks.length === (maxCellNumb - 16)) { 
+                                alert(`Congratulation! You Won!`); 
+                                window.location.reload(); 
                             }
                         }
 
@@ -107,9 +110,9 @@ function random_number_in_a_int_range(min, max) {
 
 // 16 random function
 
-function generate_16_random_number_without_repetions(min, max) {
+function generate_x_random_number_without_repetions(min, max, numb) {
     let array = [];
-    while (array.length < 2) {
+    while (array.length < numb) {
         // if the new random number is not included yet in the bomb array 
         let randomNumber = random_number_in_a_int_range(min, max);
         if (!array.includes(randomNumber)) {
